@@ -1,0 +1,100 @@
+<div class="container-fluid p-5">
+  <div class="row mb-5 justify-content-between">
+    <div class="col-5">
+      <h3>
+        <span class="fs-5"><i class="bi bi-inboxes-fill"></i></span> Permintaan
+        <span class="text-success">Dosir</span>
+      </h3>
+    </div>
+
+    <div class="col-5">
+      <form
+        class="input-group"
+        role="search"
+        method="post"
+        style="width: 500px"
+        action="/riwayat/search"
+      >
+        <select class="form-select" name="category" id="search" required>
+          <option value="name"
+          <% if (category && category === 'name') { %>
+          selected
+          <% } %>
+          >Nama</option>
+          <option value="nip"
+          <% if (category && category === 'nip') { %>
+            selected
+          <% } %>
+          >NIP</option>
+        </select>
+        <input
+          class="form-control"
+          type="search"
+          name="query"
+          placeholder="Kata kunci"
+          aria-label="Search"
+          autocomplete="off"
+          value="<%= query %>"
+        />
+        <input
+          type="hidden"
+          name="permintaan"
+          value="1"
+        />
+        <button class="btn btn-success" type="submit">
+          <i class="bi bi-search"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="row justify-content-end">
+    <div class="col">
+      <table class="table table-hover text-center">
+        <thead>
+          <tr>
+            <th scope="col">No</th>
+            <th scope="col">Nama</th>
+            <th scope="col">NIP</th>
+            <th scope="col">Waktu Request</th>
+            <th scope="col" width="160px">Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% permintaan.forEach((permintaan, index) => { %>
+            <tr>
+              <th scope="row"><%= index + 1 %></th>
+              <td><%= permintaan.peminjamNama %></td>
+              <td><%= permintaan.peminjamNip %></td>
+              <td>
+                <%= permintaan.waktuRequest.toLocaleDateString('id', {weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'}) %>
+                <%= permintaan.waktuRequest.toLocaleTimeString('it-IT', {hour: '2-digit', minute: '2-digit'}) %>
+              </td>
+              <td>
+                <div class="input-group">
+                  <form action="/riwayat?_method=put&id=<%= permintaan.id %>" method="post">
+                    <button class="btn text-success" type="submit" style="border:0; padding:0;margin-right: 5px;"><i class="bi bi-check2-circle"></i> Terima</button>
+                  </form>
+                  |
+                  <form action="/riwayat?_method=patch&id=<%= permintaan.id %>" method="post">
+                    <button class="btn text-danger" type="submit" style="border:0; padding:0; margin-left: 5px;">Tolak <i class="bi bi-x-lg"></i></button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col">
+      <% if (permintaan.length < 1) { %>
+        <div class="alert alert-success alert-dismissible fade show p-4 mt-3" role="alert">
+          <i class="bi bi-chevron-right"></i> Belum ada permintaan dari pengguna.
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>

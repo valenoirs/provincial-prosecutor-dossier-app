@@ -1,0 +1,136 @@
+<div class="container-fluid">
+  <div class="row p-5 justify-content-evenly">
+    <div class="col-5 p-5" style="border: 1px solid rgba(128, 128, 128, 0.445)">
+      <h3>
+        <span class="text-success"><i class="bi bi-person-fill-gear"></i></span>
+        Profile
+      </h3>
+      <br />
+      <div id="user-photo-wrapper" class="mb-4 text-start">
+        <img
+          src="<%= user.photo %>"
+          alt="photo"
+          style="
+            border: 1px solid black;
+            width: 175px;
+            height: 175px;
+            border-radius: 5%;
+          "
+        />
+      </div>
+      <form method="post" action="/user?_method=put">
+        <% if (!locals.user.role === 'ADMIN') { %>
+        <div class="mb-3">
+          <label for="nip" class="form-label">NIP</label>
+          <input
+            type="text"
+            name="nip"
+            class="form-control"
+            id="nip"
+            value="<%= user.nip %>"
+            autocomplete="off"
+            required
+            readonly
+          />
+        </div>
+        <% } %>
+        <div class="mb-3">
+          <label for="name" class="form-label">Nama</label>
+          <input
+            type="text"
+            name="name"
+            class="form-control"
+            id="name"
+            value="<%= user.name %>"
+            autocomplete="off"
+            required
+            readonly
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword" class="form-label"
+            >Password Baru</label
+          >
+          <input
+            type="password"
+            name="password"
+            placeholder=""
+            class="form-control"
+            id="exampleInputPassword"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPasswordConfirmation" class="form-label"
+            >Konfirmasi Password Baru</label
+          >
+          <input
+            type="password"
+            name="passwordConfirmation"
+            placeholder=""
+            class="form-control"
+            id="exampleInputPasswordConfirmation"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword" class="form-label"
+            >Password Lama</label
+          >
+          <input
+            type="password"
+            name="oldPassword"
+            placeholder=""
+            class="form-control"
+            id="exampleInputPassword"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-outline-success mt-3">
+          Edit Password <i class="bi bi-pencil-square"></i>
+        </button>
+      </form>
+    </div>
+
+    <!-- <div class="col-5 p-5" style="border: 1px solid rgba(128, 128, 128, 0.445)">
+      <h3>
+        <span class="text-success"><i class="bi bi-person-fill-gear"></i></span>
+        Data Pengguna
+      </h3>
+      <br />
+      <form method="post" action="/user?_method=patch">
+        <div class="mb-3">
+          <label for="email" class="form-label">NIP</label>
+          <input
+            type="email"
+            name="email"
+            class="form-control"
+            id="email"
+            aria-describedby="emailHelp"
+            value="<%= user.nip %>"
+            autocomplete="off"
+            required
+            readonly
+          />
+        </div>
+        <div class="mb-3">
+          <label for="name" class="form-label">Nama</label>
+          <input
+            type="text"
+            name="name"
+            class="form-control"
+            id="name"
+            value="<%= user.name %>"
+            autocomplete="off"
+            required
+            readonly
+          />
+        </div>
+        <br />
+        <button type="submit" class="btn btn-outline-success">
+          Edit Profile <i class="bi bi-pencil-square"></i>
+        </button>
+      </form>
+    </div> -->
+  </div>
+</div>

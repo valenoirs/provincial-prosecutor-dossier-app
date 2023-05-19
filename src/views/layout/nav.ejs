@@ -1,0 +1,146 @@
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <a
+      class="navbar-brand pt-3"
+      role="button"
+      style="font-family: 'Times New Roman', Times, serif"
+      ><h5>
+        <img src="/assets/logo.png" alt="" width="42px" />
+        <span class="fw-lights"> E-DOSIR</span>
+      </h5></a
+    >
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="/"
+            ><i class="bi bi-house-door-fill"></i> Beranda</a
+          >
+        </li>
+        <% if (locals.user && locals.user.role === "USER") { %>
+        <li class="nav-item">
+          <a class="nav-link" href="/request"
+            ><i class="bi bi-inboxes-fill"></i> Request Dosir</a
+          >
+        </li>
+        <% } %> <% if (locals.user && locals.user.role === "ADMIN") { %>
+        <li class="nav-item">
+          <a class="nav-link" href="/permintaan?category=name&query="
+            ><i class="bi bi-inboxes-fill"></i> Permintaan Dosir</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/users?category=name&query="
+            ><i class="bi bi-people-fill"></i> Pengguna</a
+          >
+        </li>
+        <% } %>
+        <li class="nav-item">
+          <a class="nav-link" href="/riwayat?category=name&query="
+            ><i class="bi bi-clock-history"></i> Riwayat</a
+          >
+        </li>
+        <!-- <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="bi bi-search"></i> Browse
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a
+                class="dropdown-item text-secondary"
+                href="/skripsi/search?title"
+                ><i class="bi bi-pen"></i> Titles</a
+              >
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a
+                class="dropdown-item text-secondary"
+                href="/skripsi/search?author"
+                ><i class="bi bi-people"></i> Authors</a
+              >
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a
+                class="dropdown-item text-secondary"
+                href="/skripsi/search?year"
+                ><i class="bi bi-calendar-date"></i> Years</a
+              >
+            </li>
+          </ul>
+        </li> -->
+      </ul>
+      <div class="d-flex">
+        <% if (locals.user) { %>
+        <div class="dropdown">
+          <a
+            class="text-success me-4"
+            href="#"
+            id="navbarDarkDropdownMenuLink"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            data-bs-auto-close="outside"
+            style="text-decoration: none"
+            ><i class="bi bi-person-square"></i> <%= locals.user.name %></a
+          >
+          <ul
+            class="dropdown-menu dropdown-menu-start dropdown-menu-lg-end"
+            aria-labelledby="navbarDropdown"
+          >
+            <li>
+              <div class="container pe-3 ps-3">
+                <p>
+                  <%= locals.user.name %>
+                  <br />
+                  <span class="text-secondary" style="font-size: 0.9rem">
+                    <%= locals.user.nip %>
+                  </span>
+                  <br />
+                  <span class="text-secondary" style="font-size: 0.9rem">
+                    <%= locals.user.role %>
+                  </span>
+                </p>
+              </div>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a
+                class="dropdown-item text-success"
+                href="/edit-profile"
+                style="text-decoration: none"
+                ><i class="bi bi-person-fill-gear"></i> Profil</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item text-danger"
+                href="/user/signout"
+                style="text-decoration: none"
+                ><i class="bi bi-box-arrow-in-left"></i> Keluar</a
+              >
+            </li>
+          </ul>
+        </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</nav>

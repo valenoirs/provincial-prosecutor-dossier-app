@@ -1,0 +1,27 @@
+#welcome {
+  /* background-image: linear-gradient(
+      rgba(25, 25, 25, 0.7),
+      rgba(25, 25, 25, 0.7)
+    ),
+    url('../assets/bg1.jpg'); */
+  /* font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; */
+  position: relative;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#signin {
+  background-image: url('../assets/logo25.png');
+  position: relative;
+  /* background-attachment: fixed; */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 150px 150px;
+  opacity: 100%;
+}
+
+.times-font {
+  font-family: 'Times New Roman', Times, serif;
+}

@@ -1,0 +1,60 @@
+<% users.forEach(user => { %>
+  <div
+    class="modal fade"
+    id="edit<%= user.id %>"
+    tabindex="-1"
+    aria-labelledby="editLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-success" id="editLabel"><i class="bi bi-chevron-right"></i> Edit Pengguna</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form method="post" action="/admin?_method=put" enctype="multipart/form-data">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="nip" name="nip" placeholder=" " value="<%= user.nip %>" required autocomplete="off">
+              <label for="nip" class="form-label">NIP</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="name" name="name" placeholder=" " value="<%= user.name %>" required autocomplete="off">
+              <label for="name" class="form-label">Nama</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="password" class="form-control" id="password" name="password" placeholder=" " value="<%= user.password %>" required>
+              <label for="password" class="form-label">Password</label>
+            </div>
+            <div class="mb-3">
+              <label for="photo" class="form-label">Foto</label>
+              <input type="file" class="form-control" id="photo" name="photo" placeholder=" ">
+              <div id="photoHelp" class="form-text">
+                *upload foto dengan format .jpg atau .png dengan ukuran 1:1
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="file" class="form-label">Dosir</label>
+              <input type="file" class="form-control" id="file" name="file" placeholder=" ">
+              <div id="fileHelp" class="form-text">
+                *upload file dengan format .rar atau .zip
+              </div>
+            </div>
+  
+              <input type="hidden" name="id" value="<%= user.id %>">
+          </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Batal</button>
+                  <button type="submit" class="btn btn-success"><i class="bi bi-pen"></i> Edit</button>
+              </div>
+          </form>
+      </div>
+      </div>
+    </div>
+  </div>
+<% }) %>

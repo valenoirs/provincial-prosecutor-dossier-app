@@ -1,0 +1,185 @@
+<div class="container-fluid p-5">
+  <div class="row mb-3 justify-content-center">
+    <div class="col">
+      <h3>
+        <span class="fs-5"><i class="bi bi-inboxes-fill"></i></span> Request
+        <span class="text-success">Dosir</span>
+      </h3>
+    </div>
+  </div>
+
+  <div class="row mb-5 justify-content-center">
+    <div class="col">
+      <div class="progress">
+        <div
+          class="progress-bar bg-success"
+          role="progressbar"
+          aria-label="Progress"
+          style="width: 100%"
+          aria-valuenow="100"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        ></div>
+      </div>
+      <div class="form-text text-center">Permintaan Diperiksa</div>
+    </div>
+    <div class="col">
+      <% if (request.isResponded && request.isAccepted) { %>
+      <div class="progress">
+        <div
+          class="progress-bar bg-success"
+          role="progressbar"
+          aria-label="Progress"
+          style="width: 100%"
+          aria-valuenow="100"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        ></div>
+      </div>
+      <div class="form-text text-center">Permintaan Disetujui</div>
+      <% } else if (request.isResponded && !request.isAccepted) { %>
+      <div class="progress">
+        <div
+          class="progress-bar bg-danger"
+          role="progressbar"
+          aria-label="Progress"
+          style="width: 100%"
+          aria-valuenow="100"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        ></div>
+      </div>
+      <div class="form-text text-center">Permintaan Ditolak</div>
+      <% } else { %>
+      <div class="progress">
+        <div
+          class="progress-bar bg-success"
+          role="progressbar"
+          aria-label="Progress"
+          style="width: 0%"
+          aria-valuenow="0"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        ></div>
+      </div>
+      <% } %>
+    </div>
+    <div class="col">
+      <% if (request.isDownloaded) { %>
+      <div class="progress">
+        <div
+          class="progress-bar bg-success"
+          role="progressbar"
+          aria-label="Progress"
+          style="width: 100%"
+          aria-valuenow="100"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        ></div>
+      </div>
+      <div class="form-text text-center">Dosir Didownload</div>
+      <% } else { %>
+      <div class="progress">
+        <div
+          class="progress-bar bg-success"
+          role="progressbar"
+          aria-label="Success example"
+          style="width: 0%"
+          aria-valuenow="0"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        ></div>
+      </div>
+      <% } %>
+    </div>
+  </div>
+
+  <div class="row mb-3 justify-content-center">
+    <div class="col text-center">
+      <% if (request.isDownloaded) { %>
+      <form action="/riwayat" method="post">
+        <input type="hidden" name="id" value="<%= request.id %>" />
+        <button class="btn btn-success">
+          <i class="bi bi-envelope"></i> Buat Permintaan Baru
+        </button>
+      </form>
+      <%} else if (request.isAccepted) { %>
+      <a href="/riwayat/download?id=<%= request.id %>" class="btn btn-success">
+        <i class="bi bi-cloud-arrow-down"></i> Download</a
+      >
+      <% } else if (request.isResponded && !request.isAccepted) { %>
+      <form action="/riwayat" method="post">
+        <input type="hidden" name="id" value="<%= request.id %>" />
+        <button class="btn btn-success">
+          <i class="bi bi-envelope"></i> Buat Permintaan Baru
+        </button>
+      </form>
+      <div class="form-text text-center text-danger">
+        *Permintaan dosir ditolak
+      </div>
+      <% } else { %>
+      <button class="btn btn-success" disabled>
+        <i class="bi bi-cloud-arrow-down"></i> Download
+      </button>
+      <div class="form-text text-center text-danger">
+        *Menunggu persetujuan admin
+      </div>
+      <% } %>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-10">
+      <h5 class="mb-3"><i class="bi bi-hourglass-split"></i> Timestamp</h5>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Waktu Request</td>
+            <td>
+              <%= request.waktuRequest.toLocaleDateString('id', {weekday:
+              'long', day: 'numeric', month: 'long', year: 'numeric'}) %> <%=
+              request.waktuRequest.toLocaleTimeString('it-IT', {hour: '2-digit',
+              minute: '2-digit'}) %>
+            </td>
+          </tr>
+          <tr>
+            <td>Waktu Respons</td>
+            <td>
+              <% if (request.waktuRespond) { %>
+              <!--  -->
+              <%= request.waktuRespond.toLocaleDateString('id', {weekday:
+              'long', day: 'numeric', month: 'long', year: 'numeric'}) %>
+              <!--  -->
+              <%= request.waktuRespond.toLocaleTimeString('it-IT', {hour:
+              '2-digit', minute: '2-digit'}) %>
+              <!--  -->
+              <% } else { %> - <% } %>
+            </td>
+          </tr>
+
+          <tr>
+            <td>Waktu Download</td>
+            <td>
+              <% if (request.waktuDownload) { %>
+              <!--  -->
+              <%= request.waktuDownload.toLocaleDateString('id', {weekday:
+              'long', day: 'numeric', month: 'long', year: 'numeric'}) %>
+              <!--  -->
+              <%= request.waktuDownload.toLocaleTimeString('it-IT', {hour:
+              '2-digit', minute: '2-digit'}) %>
+              <!--  -->
+              <% } else { %> - <% } %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

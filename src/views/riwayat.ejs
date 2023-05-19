@@ -1,0 +1,117 @@
+<div class="container-fluid p-5">
+  <div class="row mb-5 justify-content-center">
+    <div class="col">
+      <h3>
+        <span class="fs-5"><i class="bi bi-clock-history"></i> </span>Riwayat
+        <span class="text-success">Permintaan</span>
+      </h3>
+    </div>
+
+    <% if (locals.user.role === 'ADMIN') { %>
+      <div class="col-5">
+        <form
+          class="input-group"
+          role="search"
+          method="post"
+          style="width: 500px"
+          action="/riwayat/search"
+        >
+          <select class="form-select" name="category" id="search" required>
+            <option value="name"
+            <% if (category && category === 'name') { %>
+            selected
+            <% } %>
+            >Nama</option>
+            <option value="nip"
+            <% if (category && category === 'nip') { %>
+              selected
+            <% } %>
+            >NIP</option>
+          </select>
+          <input
+            class="form-control"
+            type="search"
+            name="query"
+            placeholder="Kata kunci"
+            aria-label="Search"
+            autocomplete="off"
+            value="<%= query %>"
+          />
+          <button class="btn btn-success" type="submit">
+            <i class="bi bi-search"></i>
+          </button>
+        </form>
+      </div>
+    <% } %>
+  </div>
+
+  <div class="row justify-content-end">
+    <div class="col">
+      <table class="table table-hover text-center">
+        <thead>
+          <tr>
+            <th scope="col">No</th>
+            <% if (locals.user.role === 'ADMIN') { %>
+             <th scope="col">Nama</th>
+             <th scope="col">NIP</th>
+            <% } %>
+            <th scope="col">Waktu Request</th>
+            <th scope="col">Status</th>
+            <th scope="col">Waktu Respons</th>
+            <th scope="col">Waktu Download</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% riwayat.forEach((riwayat, index) => { %>
+            <tr>
+              <th scope="row"><%= index + 1 %></th>
+              <% if (locals.user.role === 'ADMIN') { %>
+              <td><%= riwayat.peminjamNama %></td>
+              <td><%= riwayat.peminjamNip %></td>
+              <% } %>
+              <td>
+                <%= riwayat.waktuRequest.toLocaleDateString('id', {weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'}) %>
+                <%= riwayat.waktuRequest.toLocaleTimeString('it-IT', {hour: '2-digit', minute: '2-digit'}) %>
+              </td>
+              <td>
+                <% if (riwayat.isResponded && riwayat.isAccepted) { %>
+                  <span class="text-success fw-bold">Diterima</span>
+                <% } else if (riwayat.isResponded && !riwayat.isAccepted) { %>
+                  <span class="text-danger fw-bold">Ditolak</span>
+                <% } else { %>
+                  <span class="text-warning fw-bold">Menunggu</span>
+                <% } %>
+              </td>
+              <td>
+                <% if (riwayat.waktuRespond) { %>
+                  <%= riwayat.waktuRespond.toLocaleDateString('id', {weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'}) %>
+                  <%= riwayat.waktuRespond.toLocaleTimeString('it-IT', {hour: '2-digit', minute: '2-digit'}) %>
+                <% } else { %>
+                  -
+                <% } %>
+              </td>
+              <td>
+                <% if (riwayat.waktuDownload) { %>
+                  <%= riwayat.waktuDownload.toLocaleDateString('id', {weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'}) %>
+                  <%= riwayat.waktuDownload.toLocaleTimeString('it-IT', {hour: '2-digit', minute: '2-digit'}) %>
+                <% } else { %>
+                  -
+                <% } %>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col">
+      <% if (riwayat.length < 1) { %>
+        <div class="alert alert-success alert-dismissible fade show p-4 mt-3" role="alert">
+          <i class="bi bi-chevron-right"></i> Belum ada riwayat permintaan dosir.
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>
